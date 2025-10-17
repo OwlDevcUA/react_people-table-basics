@@ -5,6 +5,7 @@ interface State {
   people: Person[];
   loading: boolean;
   error: boolean;
+  loaded: boolean;
 }
 
 type Action =
@@ -15,9 +16,14 @@ type Action =
 function reducer(state: State, action: Action): State {
   switch (action.type) {
     case 'FETCH_START':
-      return { ...state, loading: true, error: false };
+      return { ...state, loading: true, error: false, loaded: false };
     case 'FETCH_SUCCESS':
-      return { people: action.payload, loading: false, error: false };
+      return {
+        people: action.payload,
+        loading: false,
+        error: false,
+        loaded: true,
+      };
     case 'FETCH_ERROR':
       return { ...state, loading: false, error: true };
     default:
@@ -29,6 +35,7 @@ const initialState: State = {
   people: [],
   loading: false,
   error: false,
+  loaded: false,
 };
 
 type Props = {

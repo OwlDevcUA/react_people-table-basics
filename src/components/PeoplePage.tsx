@@ -4,7 +4,7 @@ import { Loader } from './Loader';
 import { StateContext } from './Store/PeopleStore';
 
 export const PeoplePage: React.FC = () => {
-  const { people, loading, error } = useContext(StateContext);
+  const { people, loading, error, loaded } = useContext(StateContext);
 
   return (
     <>
@@ -19,7 +19,7 @@ export const PeoplePage: React.FC = () => {
             </p>
           )}
 
-          {!people.length && (
+          {!people.length && !error && loaded && (
             <p data-cy="noPeopleMessage">There are no people on the server</p>
           )}
 

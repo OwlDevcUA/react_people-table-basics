@@ -1,18 +1,13 @@
-import './App.scss';
-import { NavBar } from './components/NavBar';
+import { useContext, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
+import { getPeople } from './api';
+import { NavBar } from './components/NavBar';
 import {
   DispatchContext,
   GlobalStateProvider,
-  StateContext,
 } from './components/Store/PeopleStore';
-import { useContext, useEffect } from 'react';
-import { getPeople } from './api';
-
-export const App = () => {
-  const { people } = useContext(StateContext);
+const AppContent = () => {
   const dispatch = useContext(DispatchContext);
-
   const loadPeople = async () => {
     dispatch({ type: 'FETCH_START' });
     try {
@@ -26,19 +21,22 @@ export const App = () => {
 
   useEffect(() => {
     loadPeople();
-  }, [people]);
+  }, []);
 
   return (
-    <GlobalStateProvider>
-      <div data-cy="app">
-        <NavBar />
-
-        <main className="section">
-          <div className="container">
-            <Outlet />
-          </div>
-        </main>
-      </div>
-    </GlobalStateProvider>
+    <div data-cy="app">
+      <NavBar />
+      <main className="section">
+        <div className="container">
+          <Outlet />
+        </div>
+      </main>
+    </div>
   );
 };
+
+export const App = () => (
+  <GlobalStateProvider>
+    <AppContent />
+  </GlobalStateProvider>
+);
