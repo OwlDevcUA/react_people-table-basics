@@ -1,15 +1,13 @@
-import React, { useContext } from 'react';
 import { Person } from '../types';
 import { Link, useParams } from 'react-router-dom';
 import classNames from 'classnames';
-import { StateContext } from './Store/PeopleStore';
 
 type Props = {
+  people: Person[];
   person: Person;
 };
 
-export const PersonData: React.FC<Props> = ({ person }) => {
-  const { people } = useContext(StateContext);
+export const PersonData: React.FC<Props> = ({ person, people }) => {
   const { slug } = useParams();
 
   function getPersonByName(name: string) {
